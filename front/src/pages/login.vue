@@ -32,16 +32,49 @@ export default {
     methods:{
 
         login(){
-           let identifier = this.user.identifier
-           let password = this.user.password
-            console.log({identifier, password})
-           this.$store.dispatch('login', {identifier, password})
+		
+		let strapiApi = 'http://localhost:1337';
+		
+        axios.post(`${strapiApi}/api/auth/local`,  this.user)
+		.then(response => {			console.log('login ok', response)
+			const token = response.data.jwt
+			const user = response.data.user
 
-           .then(() => this.$router.push('/home'))
+			if (process.isClient) {
+			  localStorage.setItem('token', token)
+			  localStorage.setItem('user', JSON.stringify(user))
+			}
+			axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+			const something =  axios.defaults.headers.common['Authorization']
+			console.log({something})
+			this.$store.commit('AUTH_SUCCESS', token, user)
+			this.$router.push('/home')
+			})
+
+		.catch(err => {
+			//commit('AUTH_ERROR')
+			process.isClient ? localStorage.removeItem('token') : false
+			console.error('login error', err)
+
+			})		
+		
+		
+		
+		
+		
+		
+/*            let identifier = this.user.identifier
+           let password = this.user.password
+
+           this.$store.dispatch('login', {identifier, password})
+           .then((response) => {
+				console.log('login response login.vue', response)
+				this.$router.push('/home')
+			})
            .catch((err) => {
-             this.$router.push('/')
-             console.error('something is here', err)
-            })
+             //this.$router.push('/')
+             console.log('login error', err)
+            }) */
         }
     }
 }

@@ -9,6 +9,8 @@ export default function (Vue, { appOptions, router }) {
   Vue.use(Vuex)
 
   Vue.prototype.$http = axios;
+  
+  const strapiApi = 'http://localhost:1337/api' ; //env('STRAPI_API_URL')
 
   const token = process.isClient ? localStorage.getItem(`Bearer ${token}`) : false
 
@@ -59,32 +61,34 @@ export default function (Vue, { appOptions, router }) {
 
       async login({ commit }, user) {
         commit('AUTH_REQUEST')
-        await axios.post('https://aqueous-bastion-06425.herokuapp.com/auth/local/', user)
-          .then(response => {
-            const token = response.data.jwt
-            const user = response.data.user
+        axios.post(`${strapiApi}/auth/local`, user)
+		.then(response => {
+			const token = response.data.jwt
+			const user = response.data.user
+			console.log('ok', response)
+			if (process.isClient) {
+			  localStorage.setItem('token', token)
+			  localStorage.setItem('user', JSON.stringify(user))
+			}
+			axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+			const something =  axios.defaults.headers.common['Authorization']
+			console.log({something})
+			commit('AUTH_SUCCESS', token, user)
+			console.log({user, token})
+			return response
+			})
 
-            if (process.isClient) {
-              localStorage.setItem('token', token)
-              localStorage.setItem('user', JSON.stringify(user))
-            }
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-            const something =  axios.defaults.headers.common['Authorization']
-            console.log({something})
-            commit('AUTH_SUCCESS', token, user)
-            console.log({user, token})
-          })
-
-          .catch(err => {
-            commit('AUTH_ERROR')
-            process.isClient ? localStorage.removeItem('token') : false
-            console.error(err)
-          })
+		.catch(err => {
+			commit('AUTH_ERROR')
+			process.isClient ? localStorage.removeItem('token') : false
+			console.error('login error', err)
+			return err
+			})
       },
 
-      async register({commit}, user) {
+      register({commit}, user) {
         commit('AUTH_REQUEST')
-        await axios.post('https://aqueous-bastion-06425.herokuapp.com/auth/local/register', user)
+       axios.post(`${strapiApi}/auth/local/register`, user)
           .then(response => {
             const token = response.data.jwt
             const user = response.data.user
@@ -94,12 +98,13 @@ export default function (Vue, { appOptions, router }) {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
             commit('AUTH_SUCCESS', token, user)
+			console.log('register success', response);
           })
           .catch(err => {
             commit('AUTH_ERROR')
             process.isClient ? localStorage.removeItem('token') : false
-            console.error(err)
-          })
+            console.log('register error', err)
+          }) 
 
       },
 

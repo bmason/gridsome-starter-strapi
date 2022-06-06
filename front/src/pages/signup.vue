@@ -3,9 +3,11 @@
         <form class="signup" onsubmit="return false" autocomplete="off">
             <h1>Create account</h1>
             <h2>Already have an account? <span><g-link to="/login">Sign in</g-link></span></h2>
+			
+			<div v-if="errorMsg">{{ errorMsg }}</div> 
 
             <div class="signup__field">
-                <input class="signup__input" type="text" v-model="user.name" name="username" required />
+                <input class="signup__input" type="text" v-model="user.username" name="username" required />
                 <label class="signup__label" for="username">Username</label>
             </div>
 
@@ -31,23 +33,42 @@ export default {
             return{
                 user: {
                     email: '',
-                    name: '',
+                    username: '',
                     password: ''
-                }
+                },
+				errorMsg: ''
             }
         },
     methods:{
 
         register(){
+		console.log(this.user)
+			const strapiApi = 'http://localhost:1337/api' ; //env('STRAPI_API_URL')		
             let reqObj = {
               username: this.user.name,
               email: this.user.email,
               password: this.user.password,
-            }
+            } 
+			console.log('user', this.user);
+			axios.post(`${strapiApi}/auth/local/register`, this.user)
+          .then(response => {
+            const token = response.data.jwt
+            const user = response.data.user
 
-            this.$store.dispatch('register', reqObj)
-            .then(() => this.$router.push('/login'))
-            .catch(err => console.log(err))
+            process.isClient ? localStorage.setItem('token', token) : false
+			this.$router.push('/')
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
+            this.$store.commit('AUTH_SUCCESS', token, user)
+			console.log('register success', response);
+          })
+          .catch((err) => {
+            this.$store.commit('AUTH_ERROR')
+            process.isClient ? localStorage.removeItem('token') : false
+            console.log('register error', err.response)
+			this.errorMsg = err.response.data.error.message
+          }) 
+		  
         }
     }
 }
