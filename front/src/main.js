@@ -4,6 +4,7 @@
 import DefaultLayout from '~/layouts/Default.vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import './css/tailwind.css'
 
 export default function (Vue, { appOptions, router }) {
   Vue.use(Vuex)

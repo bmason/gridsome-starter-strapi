@@ -4,7 +4,19 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-module.exports = {
-  siteName: 'Strapi Learning Platform',
+const tailwindcss = require('tailwindcss')
+const autoprefixer = require('autoprefixer')
 
+module.exports = {
+	siteName: 'Strapi Learning Platform',
+	css: {
+		loaderOptions: {
+		  postcss: {
+			plugins: [
+			  tailwindcss,
+			  autoprefixer
+			]
+		  }
+		}
+	  },
 }

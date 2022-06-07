@@ -5,7 +5,7 @@
             <div v-if="!authStatus">
                 <h1>Welcome!</h1>
 
-                <p>
+                <p class="text-green-500">
                     Strapi is the leading open-source headless CMS. It’s 100%
                     Javascript, fully customizable and developer-first.
                 </p>

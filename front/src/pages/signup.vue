@@ -4,7 +4,7 @@
             <h1>Create account</h1>
             <h2>Already have an account? <span><g-link to="/login">Sign in</g-link></span></h2>
 			
-			<div v-if="errorMsg">{{ errorMsg }}</div> 
+			<div class="text-red-500" v-if="errorMsg">{{ errorMsg }}</div> 
 
             <div class="signup__field">
                 <input class="signup__input" type="text" v-model="user.username" name="username" required />
@@ -13,7 +13,7 @@
 
             <div class="signup__field">
                 <input class="signup__input" type="email" v-model="user.email" name="email"  required />
-                <label class="signup__label" for="email">Email</label>
+                <label class="text-red-500 signup__label" for="email">Email</label>
             </div>
 
             <div class="signup__field">
