@@ -11,7 +11,7 @@
                 </p>
 
                 <p> <g-link to="/login"> Login </g-link> to enjoy all our courses here</p>
-
+<p>Gridsome v{{ gridVersion }} strapi vuex Vue v{{ vueVersion }}  vuetify tailwind</p>
             </div>
 
             <div v-else>
@@ -23,16 +23,25 @@
         </section>
 
 
+
     </Layout>
-</template>
+
+
+</template>	
+	
+
 
 <script>
 
+
 export default {
     metaInfo: {
-        title: 'Learning Platform',
+        title: 'Starter',
     },
+	
     computed:{
+		gridVersion() {return '.7.2.3' },
+		vueVersion() {return window.localStorage.getItem('vueVersion')},
         authStatus(){
             if(this.$store.getters.authStatus === 'success'){
                 return true

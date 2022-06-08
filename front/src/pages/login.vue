@@ -3,23 +3,33 @@
         <form class="signup" onsubmit="return false" autocomplete="off">
             <h1>Welcome Back</h1>
             <h2>Don't have an account? <g-link to="/signup">Sign up</g-link></h2>
-            <div class="signup__field">
-                <input class="signup__input" type="text"  v-model="user.identifier" name="email"  required />
-                <label class="signup__label" for="email">Email</label>
-            </div>
 
-            <div class="signup__field">
-                <input class="signup__input" type="password" v-model="user.password" name="password"  required />
-                <label class="signup__label" for="password">Password</label>
-            </div>
-
+          <v-text-field
+            filled
+			v-model="user.identifier"
+            label="Email"
+			type=email
+            prepend-inner-icon="mdi-email"
+          />
+          <v-text-field
+            filled
+			v-model="user.passowrd"
+            label="Password"
+			type=password
+            prepend-inner-icon="mdi-lock"
+          />		  
+		  
             <button @click="login">Sign in</button>
         </form>
+		
+	
+		
     </Layout>
 </template>
 
 <script>
 import axios from 'axios';
+
 export default {
     data(){
             return{

@@ -1,13 +1,34 @@
 // This is the main.js file. Import global CSS and scripts here.
 // The Client API can be used here. Learn more: gridsome.org/docs/client-api
 
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
 import DefaultLayout from '~/layouts/Default.vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import './css/tailwind.css'
 
-export default function (Vue, { appOptions, router }) {
+export default function (Vue, { appOptions, router, head }) {
   Vue.use(Vuex)
+  
+	
+  window.localStorage.setItem('vueVersion', Vue.version); 
+
+  head.link.push({
+    rel: 'stylesheet',
+    href: 'https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css',
+  })
+  
+  head.link.push({
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900',
+  });
+  
+  const opts = { } //opts includes, vuetify themes, icons, etc.
+  Vue.use(Vuetify)
+  
+  appOptions.vuetify = new Vuetify(opts);
+
 
   Vue.prototype.$http = axios;
   
@@ -60,54 +81,7 @@ export default function (Vue, { appOptions, router }) {
 
     actions: {
 
-      async login({ commit }, user) {
-        commit('AUTH_REQUEST')
-        axios.post(`${strapiApi}/auth/local`, user)
-		.then(response => {
-			const token = response.data.jwt
-			const user = response.data.user
-			console.log('ok', response)
-			if (process.isClient) {
-			  localStorage.setItem('token', token)
-			  localStorage.setItem('user', JSON.stringify(user))
-			}
-			axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-			const something =  axios.defaults.headers.common['Authorization']
-			console.log({something})
-			commit('AUTH_SUCCESS', token, user)
-			console.log({user, token})
-			return response
-			})
 
-		.catch(err => {
-			commit('AUTH_ERROR')
-			process.isClient ? localStorage.removeItem('token') : false
-			console.error('login error', err)
-			return err
-			})
-      },
-
-      register({commit}, user) {
-        commit('AUTH_REQUEST')
-       axios.post(`${strapiApi}/auth/local/register`, user)
-          .then(response => {
-            const token = response.data.jwt
-            const user = response.data.user
-
-            process.isClient ? localStorage.setItem('token', token) : false
-
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-
-            commit('AUTH_SUCCESS', token, user)
-			console.log('register success', response);
-          })
-          .catch(err => {
-            commit('AUTH_ERROR')
-            process.isClient ? localStorage.removeItem('token') : false
-            console.log('register error', err)
-          }) 
-
-      },
 
       logout({commit}){
 		    return new Promise((resolve, reject) => {

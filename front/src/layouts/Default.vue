@@ -1,12 +1,12 @@
 <template>
-    <div class="layout">
+    <v-app class="layout">
         <header class="header">
             <Navbar />
         </header>
 
         <p style="color: #fff"> Auth Status: <span>{{authStatus}}</span> </p>
         <slot />
-    </div>
+    </v-app>
 </template>
 
 <static-query>

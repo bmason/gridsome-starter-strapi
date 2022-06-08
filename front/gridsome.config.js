@@ -8,7 +8,7 @@ const tailwindcss = require('tailwindcss')
 const autoprefixer = require('autoprefixer')
 
 module.exports = {
-	siteName: 'Strapi Learning Platform',
+	siteName: 'Starter',
 	css: {
 		loaderOptions: {
 		  postcss: {

@@ -6,8 +6,20 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 const axios = require("axios");
+const nodeExternals = require('webpack-node-externals')
+
 
 module.exports = function(api) {
+	api.chainWebpack((config, { isServer }) => {
+		if (isServer) {
+		  config.externals([
+			nodeExternals({
+			  allowlist: [/^vuetify/]
+			})
+		  ])
+		}	
+	  })	
+	
 	api.loadSource(async (actions) => {
 		console.log("--> actions", actions);
 		console.log("--> actions", process.env.STRAPI_API_URL);
@@ -24,7 +36,7 @@ module.exports = function(api) {
 			path: "/course/:id",
 		});
 
-		for (const course of data.data) {
+ 		for (const course of data.data) {
 			collection.addNode({
 				id: course.id,
 				path: "/course/" + course.id,
@@ -36,4 +48,7 @@ module.exports = function(api) {
 		}
 		console.log('courses', collection);
 	});
+	
+	
+	
 };

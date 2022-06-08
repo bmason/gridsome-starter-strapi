@@ -4,7 +4,7 @@
         <nav>
             <div>
                 <h1>
-                    <g-link to="/"> Strapi Learning Platform </g-link>
+                    <g-link to="/"> Starter </g-link>
                 </h1>
             </div>
             <ul>
@@ -64,7 +64,7 @@ export default {
     methods:{
         logout(){
             this.$store.dispatch('logout')
-                .then((response) => { console.log(response);
+                .then(() => { 
                     this.$router.push('/')
                 })
                 .catch(err => {
