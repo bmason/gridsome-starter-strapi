@@ -1,27 +1,45 @@
 <template>
     <Layout>
-        <form class="signup" onsubmit="return false" autocomplete="off">
+		<FormulateForm
+			class="signup" 
+			@submit="login"
+						
+		>
             <h1>Welcome Back</h1>
-            <h2>Don't have an account? <g-link to="/signup">Sign up</g-link></h2>
+            <h2>Don't have an account? <g-link to="/signup">Sign&nbsp;up</g-link></h2>
 
-          <v-text-field
-            filled
-			v-model="user.identifier"
-            label="Email"
-			type=email
-            prepend-inner-icon="mdi-email"
-          />
-          <v-text-field
-            filled
-			v-model="user.passowrd"
-            label="Password"
-			type=password
-            prepend-inner-icon="mdi-lock"
-          />		  
-		  
-            <button @click="login">Sign in</button>
-        </form>
+
+		<FormulateInput
+			label="Email"
+			type="email"
+			v-model="user.identifier"			  
+			name="email"
+			validation="^required|email"
+			label-is-valid-class= "valid-input"
+		/>	
 		
+		<FormulateInput
+			label="Password"
+			type="password"
+			v-model="user.password"			  
+			name="password"
+			validation="^required|min:4,length|matches:/[0-9]/"
+			:validation-messages="{
+			matches: 'Passwords require at least one number.'
+			}"
+			label-is-valid-class= "valid-input"
+		/>
+		<div class="flex space-x-2 justify-center">
+			<FormulateInput
+				type="submit"
+				label="Login"
+			/>		
+		</div>
+
+	</FormulateForm>	  
+		  
+		 <label  for="formulate--login-2" class="font-medium text-sm valid-input">Password</label>
+
 	
 		
     </Layout>
@@ -42,6 +60,7 @@ export default {
     methods:{
 
         login(){
+		console.log('login'); return
 		
 		let strapiApi = 'http://localhost:1337';
 		
@@ -67,49 +86,24 @@ export default {
 			console.error('login error', err)
 
 			})		
-		
-		
-		
-		
-		
-		
-/*            let identifier = this.user.identifier
-           let password = this.user.password
-
-           this.$store.dispatch('login', {identifier, password})
-           .then((response) => {
-				console.log('login response login.vue', response)
-				this.$router.push('/home')
-			})
-           .catch((err) => {
-             //this.$router.push('/')
-             console.log('login error', err)
-            }) */
         }
     }
 }
 </script>
 
 <style scoped>
-    @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 
-
-body {
-  background-color: #753ff6;
-  width: 100%;
-  min-height: 100vh;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+form.formulate-form h1:after,
+label.valid-input:after,
+form.formulate-form label#formulate--login-2_label:after {
+	content: " \2713";
+	color: green;
 }
 
-button,
-input {
-  border: none;
-  outline: none;
-}
+
+hr {width:100%; height:1px; background: #fff; margin-top: -12px; }
 
 /****************
       FORM
@@ -140,84 +134,6 @@ h2 {
   margin-bottom: 40px;
 }
 
-h2 span {
-  text-decoration: underline;
-  cursor: pointer;
-  color: #753ff6;
-}
 
-/*  Field */
-.signup__field {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  position: relative;
-  margin-bottom: 50px;
-
-}
-
-.signup__field:before {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  width: 0px;
-  height: 2px;
-  background: #753ff6;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: all 0.4s ease;
-}
-
-.signup__field:hover:before {
-  width: 100%;
-}
-
-/*  Input */
-.signup__input {
-  width: 100%;
-  height: 100%;
-  font-size: 1.2rem;
-  padding: 10px 2px 0;
-  border-bottom: 2px solid #e0e0e0;
-}
-
-/*  Label */
-.signup__label {
-  color: #bdbdbd;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 2px;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
-}
-
-.signup__input:focus + .signup__label,
-.signup__input:valid + .signup__label {
-  top: 0;
-  font-size: 1rem;
-  background-color: white;
-}
-
-/*  Button */
-button {
-  background: #753ff6;
-  color: white;
-  padding: 12px 0;
-  font-size: 1.2rem;
-  border-radius: 25px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #753ff6;
-}
-
-@media (max-width: 700px){
-  .signup{
-    padding: .4rem;
-  }
-}
 </style>
 

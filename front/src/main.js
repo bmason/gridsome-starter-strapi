@@ -7,10 +7,27 @@ import DefaultLayout from '~/layouts/Default.vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import './css/tailwind.css'
+import VueFormulate from '@braid/vue-formulate'
 
 export default function (Vue, { appOptions, router, head }) {
-  Vue.use(Vuex)
-  
+	Vue.use(Vuex)
+	Vue.use(VueFormulate, {
+		classes: {
+			outer: 'mb-4',
+			input(context) {//console.log('context', context.classification, context);
+			  switch (context.classification) { 
+				case "button":
+				  return " px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600";
+				case "text":
+				  return "border-solid border-gray-400 border-b-2 rounded px-3 py-2 leading-none focus:border-green-500 focus:border-2 outline-none border-box w-full mb-1";
+			  }
+			},			
+			label: 'font-medium text-sm',
+			help: 'text-xs mb-1 text-gray-600',
+			error: 'text-red-700 text-xs mb-1',
+
+		}
+	})
 	
   window.localStorage.setItem('vueVersion', Vue.version); 
 

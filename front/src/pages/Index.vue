@@ -6,23 +6,28 @@
                 <h1>Welcome!</h1>
 
                 <p class="text-green-500">
-                    Strapi is the leading open-source headless CMS. It’s 100%
-                    Javascript, fully customizable and developer-first.
+                    A starter with user register/login and jwt  
                 </p>
 
-                <p> <g-link to="/login"> Login </g-link> to enjoy all our courses here</p>
-<p>Gridsome v{{ gridVersion }} strapi vuex Vue v{{ vueVersion }}  vuetify tailwind</p>
+				<p>Gridsome v{{ gridVersion }} Strapi Vuex Vue v{{ vueVersion }}  Vuetify VueFormulate Tailwind</p>
+
             </div>
 
             <div v-else>
                 <h2> You're logged in </h2>
 
-                <p> Continue viewing your  <g-link to="/home"> courses </g-link>  </p>
+
             </div>
 
         </section>
 
-
+		<h1>Issues:</h1>
+		<ul>
+			<li>Validation
+				<p>I tried to place a checkmark after a completed field as in the <a href="https://vueformulate.com/guide/theming/customizing-classes/#class-keys">VueFormulate docs</a>.  
+				See the Login.vue page.  I would be grateful for any assistance.</p>
+			</li>
+		</ul>
 
     </Layout>
 
@@ -65,5 +70,9 @@ export default {
     background: #fff;
     color: #2f2e8b;
     padding: 1rem;
+}
+
+.oldSchool {
+border-bottom-width: 4px;
 }
 </style>

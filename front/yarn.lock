@@ -934,6 +934,19 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     "to-fast-properties" "^2.0.0"
 
+"@braid/vue-formulate-i18n@^1.16.0":
+  "integrity" "sha512-CuX1kN7bWg4ukynnTS3LGsmPKrUvS2Wh75zKatIe+nHQQy0gSvfmggQsCz4QZey7Ois+pGYmOIgrE1SvX+zQTw=="
+  "resolved" "https://registry.npmjs.org/@braid/vue-formulate-i18n/-/vue-formulate-i18n-1.16.0.tgz"
+  "version" "1.16.0"
+
+"@braid/vue-formulate@^2.5.3":
+  "integrity" "sha512-HdyslHKkzJAtMiD2BP0PfQ8/BaRs1NPlWA8DhgL4ImR/1tuzQLrZButVIqWiucfRitfrgeWz5qrByZs8zp5vFw=="
+  "resolved" "https://registry.npmjs.org/@braid/vue-formulate/-/vue-formulate-2.5.3.tgz"
+  "version" "2.5.3"
+  dependencies:
+    "@braid/vue-formulate-i18n" "^1.16.0"
+    "is-plain-object" "^3.0.1"
+
 "@gridsome/cli@^0.3.4":
   "integrity" "sha512-KkfnDs3aDRdNapxS5QwCUDUzNJgc+uRExw5IRUrVn38zOdmJc0d8hFqHZ7GpcHEX1W0BVyUsa4sQ3LNyjlttsg=="
   "resolved" "https://registry.npmjs.org/@gridsome/cli/-/cli-0.3.4.tgz"
@@ -5411,6 +5424,11 @@
   "version" "2.0.4"
   dependencies:
     "isobject" "^3.0.1"
+
+"is-plain-object@^3.0.1":
+  "integrity" "sha512-Xnpx182SBMrr/aBik8y+GuR4U1L9FqMSojwDQwPMmxyC6bvEqly9UBCxhauBF5vNh2gwWJNX6oDV7O+OM4z34g=="
+  "resolved" "https://registry.npmjs.org/is-plain-object/-/is-plain-object-3.0.1.tgz"
+  "version" "3.0.1"
 
 "is-png@^1.0.0":
   "integrity" "sha512-23Rmps8UEx3Bzqr0JqAtQo0tYP6sDfIfMt1rL9rzlla/zbteftI9LSJoqsIoGgL06sJboDGdVns4RTakAW/WTw=="
